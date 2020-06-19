@@ -218,7 +218,7 @@ module.exports = (sequelize, DataTypes) => {
       description: "description",
       length: "length",
       rating: sequelize.literal("rating::text"),
-      language: sequelize.col("language.name"),
+      //language: sequelize.col("language.name"),
       rental_rate: "rental_rate",
     };
     const orderBy = args.order
@@ -245,7 +245,7 @@ module.exports = (sequelize, DataTypes) => {
       offset: args.start || 0,
       order: orderBy,
       include: [
-        { model: models.language },
+        { model: models.language, required: true },
         {
           model: models.actor,
           through: {
