@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet' href='/stylesheets/site.css')
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.21/css/jquery.dataTables.css')
+
+    script(src='//code.jquery.com/jquery-3.5.1.js')
+    script(src='//cdn.datatables.net/v/dt/dt-1.10.21/datatables.js')
+  body
+
+    div(class='navbar')
+
+      a(href="/home" class="navbar-brand") Home
+      a(href="/customers" class="navbar-item") Customers
+      a(href="/films" class="navbar-item") Films
+
+    div(class='body-content')
+      block content
+      hr
+      footer
+        p Tam Tran

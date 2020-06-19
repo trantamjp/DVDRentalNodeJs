@@ -1,0 +1,126 @@
+extends layout_dt
+
+block content
+  div(id="page")
+    div(id="content")
+      div(id="header")
+        h1 Films
+
+      table(id="example" class="display" style="width:100%")
+        thead
+          tr
+            th Title
+            th Category
+            th Description
+            th Actors
+            th Length
+            th Rating
+            th Lang
+            th Price
+        thead
+          tr
+            td
+              input(type=text class='title_search' data-name="title" placeholder="Search title")
+            td
+              select(class='category_search' data-name="categories")
+                option(value='') Any
+            td
+              input(type=text class='description_search' data-name="description" placeholder="Search description")
+            td
+              input(type=text class='actors_search' data-name="actors" placeholder="Search actors")
+            td
+            td
+              select(class='rating_search' data-name="rating")
+                option(value='') Any
+                option(value='G') G
+                option(value='NC-17') NC-17
+                option(value='PG-13') PG-13
+                option(value='PG') PG
+                option(value='R') R
+            td
+              select(class='language_search' data-name="language")
+                option(value='') Any
+            td
+        tfoot
+          tr
+            th Title
+            th Category
+            th Description
+            th Actors
+            th Length
+            th Rating
+            th Lang
+            th Price
+  script.
+    $(document).ready(function () {
+
+      $.ajax({
+        type: "GET",
+        url: "/api/categories",
+        success: function (data) {
+          var select = $('.category_search');
+          $.each(data, function (i, d) {
+            select.append('<option value="' + d.categoryId + '">' + d.name + '</option>');
+          });
+        }
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "/api/languages",
+        success: function (data) {
+          var select = $('.language_search');
+          $.each(data, function (i, d) {
+            select.append('<option value="' + d.languageId + '">' + d.name + '</option>');
+          });
+        }
+      });
+
+      $('#example').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "dom": "lrtip",
+        "ajax": {
+          url: "/api/films",
+          type: "POST",
+          data: function (args) {
+            return { "args": JSON.stringify(args) };
+          }
+        },
+        initComplete: function () {
+          var api = this.api();
+          $('.category_search, .rating_search, .language_search').on('change', function () {
+            var name = $(this).data().name;
+            var col = api.column(name + ':name');
+            if (col.search() !== this.value) {
+              col.search(this.value).draw();
+            }
+          });
+          $('.title_search, .description_search, .actors_search').on('keyup change clear', function () {
+            var name = $(this).data().name;
+            var col = api.column(name + ':name');
+            if (col.search() !== this.value) {
+              col.search(this.value).draw();
+            }
+          });
+        },
+        "columns": [
+          { data: 'title', name: 'title' },
+          {
+            data: function (row, type, val, meta) {
+              return row.categories.map(cat => cat.name).join(', ');
+            }, name: 'categories', 'orderable': false
+          },
+          { data: 'description', name: 'description' },
+          {
+            data: function (row, type, val, meta) {
+              return row.actors.map(actor => actor.firstName + ' ' + actor.lastName).join(', ');
+            }, name: 'actors', 'orderable': false
+          },
+          { data: 'length', name: 'length' },
+          { data: 'rating', name: 'rating' },
+          { data: 'language.name', name: 'language' },
+          { data: 'rentalRate', name: 'rental_rate' }
+        ]
+      });
+    });

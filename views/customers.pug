@@ -1,0 +1,117 @@
+extends layout_dt
+
+block content
+  div(id="page")
+    div(id="content")
+      div(id="header")
+        h1 Customers
+
+      table(id="example" class="display" style="width:100%")
+        thead
+          tr
+            th First Name
+            th Last Name
+            th Address
+            th City
+            th Zip Code
+            th Country
+            th Phone
+            th Active
+        thead
+          tr
+            td
+              input(type=text class='firstname_search' data-name="firstName" placeholder="Search first name")
+            td
+              input(type=text class='lastname_search' data-name="lastName" placeholder="Search last name")
+            td
+              input(type=text class='address_search' data-name="address" placeholder="Search address")
+            td
+              input(type=text class='city_search' data-name="city" placeholder="Search city")
+            td
+              input(type=text class='postalcode_search' data-name="postalCode" placeholder="Search zip code")
+            td
+              select(class='country_search' data-name="country")
+                option(value='') Any
+            td
+              input(type=text class='phone_search' data-name="phone" placeholder="Search phone")
+            td
+              select(class='activebool_search' data-name="activeBool")
+                option(value='') Any
+                option(value='1') Active
+                option(value='0') Not active
+        tfoot
+          tr
+            th First Name
+            th Last Name
+            th Address
+            th City
+            th Zip Code
+            th Country
+            th Phone
+            th Active
+  script.
+    $(document).ready(function () {
+
+      $.ajax({
+        type: "GET",
+        url: "/api/countries",
+        success: function (data) {
+          var select = $('.country_search');
+          $.each(data, function (i, d) {
+            select.append('<option value="' + d.countryId + '">' + d.country + '</option>');
+          });
+        }
+      });
+
+      $('#example').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "dom": "lrtip",
+        "ajax": {
+          url: "/api/customers",
+          type: "POST",
+          data: function (args) {
+            return { "args": JSON.stringify(args) };
+          }
+        },
+        initComplete: function () {
+          var api = this.api();
+          $('.country_search, .activebool_search').on('change', function () {
+            var name = $(this).data().name;
+            var col = api.column(name + ':name');
+            if (col.search() !== this.value) {
+              col.search(this.value).draw();
+            }
+          });
+          $('.firstname_search, .lastname_search, .address_search, .city_search, .postalcode_search, .phone_search').on('keyup change clear', function () {
+            var name = $(this).data().name;
+            var col = api.column(name + ':name');
+            if (col.search() !== this.value) {
+              col.search(this.value).draw();
+            }
+          });
+
+        },
+        "columns": [
+          { data: 'firstName', name: 'firstName' },
+          { data: 'lastName', name: 'lastName' },
+          { data: 'address.address', name: 'address' },
+          { data: 'address.city.city', name: 'city' },
+          { data: 'address.postalCode', name: 'postalCode' },
+          { data: 'address.city.country.country', name: 'country' },
+          { data: 'address.phone', name: 'phone' },
+            {
+            data: 'activeBool', name: 'activeBool',
+            render: function (data, type, row, meta) {
+              if (type === 'display') {
+                return row.activeBool ? 'active' : 'not active';
+              }
+              else if (type === 'filter') {
+                return row.activeBool ? 'active' : 'not active';
+              }
+              return row.activeBool;
+            }
+          }
+        ]
+      });
+    });
