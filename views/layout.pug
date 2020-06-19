@@ -2,6 +2,16 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/site.css')
+
   body
-    block content
+    div(class='navbar')
+      a.navbar-brand(href="/") Home
+      a.navbar-item(href="/customers") Customers
+      a.navbar-item(href="/films") Films
+
+    div(class='body-content')
+      block content
+      hr
+      footer
+        p Tam Tran

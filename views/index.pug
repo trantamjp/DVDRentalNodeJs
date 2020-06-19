@@ -1,5 +1,32 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+  #getting-started
+    h1 NodeJS Samples
+    span
+      | Github 
+      a(href='https://github.com/trantamjp/DVDRentalNodeJs') https://github.com/trantamjp/DVDRentalNodeJs
+    h2 Sample Data
+    h3
+      | Download from here 
+      a(href='https://www.postgresqltutorial.com/postgresql-sample-database/') https://www.postgresqltutorial.com/postgresql-sample-database/
+    ol
+      li
+        p
+          a(href="/customers") Customers List
+        p
+          | DataTable with server-side processing.
+          br
+          |  The API is 
+          a(href="/api/customers" target='_blank') here
+          | . Without the query parameters, the API returns only the first 10 rows.
+      li
+        p
+          a(href="/films") Films List
+        p
+          | DataTable with server-side processing.
+          br
+          |  The API is 
+          a(href="/api/films" target='_blank') here
+          | . Without the query parameters, the API returns only the first 10 rows.
