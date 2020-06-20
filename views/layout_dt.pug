@@ -8,10 +8,15 @@ html
     script(src='//code.jquery.com/jquery-3.5.1.js')
     script(src='//cdn.datatables.net/v/dt/dt-1.10.21/datatables.js')
   body
+    h3
+      | See other demos:&nbsp;&nbsp;
+      a.perldemo() Perl Demo
+      | , &nbsp;
+      a.pythondemo() Python Demo
 
     div(class='navbar')
 
-      a(href="/" class="navbar-brand") Home
+      a(href="/" class="navbar-brand") NodeJS Demo
       a(href="/customers" class="navbar-item") Customers
       a(href="/films" class="navbar-item") Films
 
@@ -20,3 +25,7 @@ html
       hr
       footer
         p Tam Tran
+    script.
+      $('.perldemo').attr('href', $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':5000');
+      $('.pythondemo').attr('href', $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':5001');
+      $('.nodejsdemo').attr('href', $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':5002');

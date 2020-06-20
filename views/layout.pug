@@ -4,9 +4,10 @@ html
     title= title
     link(rel='stylesheet' href='/stylesheets/site.css')
 
+    script(src='//code.jquery.com/jquery-3.5.1.js')
   body
     div(class='navbar')
-      a.navbar-brand(href="/") Home
+      a.navbar-brand(href="/") NodeJS Demo
       a.navbar-item(href="/customers") Customers
       a.navbar-item(href="/films") Films
 
@@ -14,4 +15,14 @@ html
       block content
       hr
       footer
+        div(class='navbar')
+          .navbar-brand Other demos:
+        h3
+          a.perldemo() Perl Demo
+          br
+          a.pythondemo() Python Demo
         p Tam Tran
+    script.
+      $('.perldemo').attr('href', $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':5000');
+      $('.pythondemo').attr('href', $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':5001');
+      $('.nodejsdemo').attr('href', $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':5002');
