@@ -1,28 +1,37 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet' href='/stylesheets/site.css')
-
-    script(src='//code.jquery.com/jquery-3.5.1.js')
-  body
-    div(class='navbar')
-      a.navbar-brand(href="/") NodeJS Demo
-      a.navbar-item(href="/customers") Customers
-      a.navbar-item(href="/films") Films
-
-    div(class='body-content')
-      block content
-      hr
-      footer
-        div(class='navbar')
-          .navbar-brand Other demos:
-        h3
-          a.perldemo() Perl Demo
-          br
-          a.pythondemo() Python Demo
-        p Tam Tran
-    script.
-      $('.perldemo').attr('href', $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':5000');
-      $('.pythondemo').attr('href', $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':5001');
-      $('.nodejsdemo').attr('href', $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':5002');
+    head
+        meta(charset='utf-8')
+        title
+            block title
+        link(rel='stylesheet' type='text/css' href="/stylesheets/site.css")
+        script(src='//code.jquery.com/jquery-3.5.1.js')
+    body
+        #page
+            #sidebar
+                ul#sidebar-items
+                li
+                    h3 Links
+                    ul.links
+                    li
+                        a.perldemo(href) Perl Demo
+                    li
+                        a.pythondemo(href) Python Demo
+                    li
+                        a.nodejsdemo(href) NodeJS Demo
+            .navbar
+                a.navbar-brand(href="/") DVDRentalNodeJS
+                a.navbar-item(href="/customers") Customers
+                a.navbar-item(href="/films") Films
+            .body-content
+                block content
+                hr
+                footer
+                    p Tam Tran
+        script.
+            $(document).ready(function () {
+                var url_base = $(location).attr('protocol') + '//' + $(location).attr('hostname');
+                $('.perldemo').attr('href', url_base + ':5000');
+                $('.pythondemo').attr('href', url_base + ':5001');
+                $('.nodejsdemo').attr('href', url_base + ':5002');
+            });
