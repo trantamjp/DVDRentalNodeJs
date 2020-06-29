@@ -14,9 +14,8 @@ router.get("/films", function (req, res, next) {
   res.render("films", { title: "Films" });
 });
 
-/* Redirect home page. */
-router.get("/*", function (req, res, next) {
-  res.redirect(req.protocol + '://' + req.hostname);
+router.get("/", function (req, res, next) {
+  res.redirect("/home");
 });
 
 module.exports = router;

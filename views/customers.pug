@@ -56,6 +56,7 @@ block content
             $.ajax({
                 type: "GET",
                 url: "/api/countries",
+                contentType: "application/json",
                 success: function (data) {
                     var select = $('.country_search');
                     $.each(data, function (i, d) {
@@ -71,8 +72,9 @@ block content
                 "ajax": {
                     url: "/api/customers",
                     type: "POST",
+                    contentType: "application/json",
                     data: function (args) {
-                        return { "args": JSON.stringify(args) };
+                        return JSON.stringify(args);
                     }
                 },
                 "columns": [

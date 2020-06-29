@@ -59,6 +59,7 @@ block content
             $.ajax({
                 type: "GET",
                 url: "/api/categories",
+                contentType: "application/json",
                 success: function (data) {
                     var select = $('.category_search');
                     $.each(data, function (i, d) {
@@ -70,6 +71,7 @@ block content
             $.ajax({
                 type: "GET",
                 url: "/api/languages",
+                contentType: "application/json",
                 success: function (data) {
                     var select = $('.language_search');
                     $.each(data, function (i, d) {
@@ -85,8 +87,9 @@ block content
                 "ajax": {
                     url: "/api/films",
                     type: "POST",
+                    contentType: "application/json",
                     data: function (args) {
-                        return { "args": JSON.stringify(args) };
+                        return JSON.stringify(args);
                     }
                 },
                 "columns": [

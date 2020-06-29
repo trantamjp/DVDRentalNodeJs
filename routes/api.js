@@ -11,10 +11,7 @@ router.get("/categories", categoryController.getCategories);
 router.get("/languages", languageController.getLanguages);
 router.get("/countries", countryController.getCountries);
 
-router.get("/customers", customerController.getDataTableCustomers);
 router.post("/customers", customerController.getDataTableCustomers);
-
-router.get("/films", filmController.getDataTableFilms);
 router.post("/films", filmController.getDataTableFilms);
 
 module.exports = router;

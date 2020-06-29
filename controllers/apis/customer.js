@@ -5,8 +5,7 @@ const models = require("../../models");
 
 module.exports = Controller.extend({
   async getDataTableCustomers(req, res) {
-    let args = req.body;
-    args = args.args ? JSON.parse(args.args) : {};
+    let args = req.is('application/json') ? req.body : {};
 
     args.start = args.start || 0;
     args.length = args.length || 10;
