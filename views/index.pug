@@ -16,20 +16,22 @@ block content
             a(href='https://www.postgresqltutorial.com/postgresql-sample-database/' target="_blank") https://www.postgresqltutorial.com/postgresql-sample-database/
         ol
             li
+                form#formCustomerAPI(action='/api/customers' method='POST' target='_blank')
                 p
                     a(href="/customers") Customers List
                 p
                     | DataTable with server-side processing.
                     br
                     |  The API is 
-                    a(href="/api/customers" target='_blank') here
+                    a(href="/api/customers" target='_blank' onclick="document.forms['formCustomerAPI'].submit(); return false;") here
                     | . Without the query parameters, the API returns only the first 10 rows.
             li
+                form#formFilmAPI(action='/api/films' method='POST' target='_blank')
                 p
                     a(href="/films") Films List
                 p
                     | DataTable with server-side processing.
                     br
                     |  The API is 
-                    a(href="/api/films" target='_blank') here
+                    a(href="/api/films" target='_blank' onclick="document.forms['formFilmAPI'].submit(); return false;") here
                     | . Without the query parameters, the API returns only the first 10 rows.
